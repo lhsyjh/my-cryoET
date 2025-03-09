@@ -84,19 +84,18 @@ class ZarrDataset(Dataset):
         # 构建zarr文件的路径
         zarr_file_path = os.path.join(folder_path, 'Reconstructions', 'VoxelSpacing10.000', 'Tomograms', '100',
                                       f'{os.path.basename(folder_path)}.zarr')
-
         # 打开Zarr文件
         zarr_file = zarr.open(zarr_file_path, mode='r')
 
         # 假设我们要访问数据集中的第一个数据集（例如"0"）
         dataset = zarr_file['0'][:]
 
-
         #如果需要，可以应用转换（例如归一化、数据增强等）
         if self.transform:
             sample = self.transform(dataset)
 
         return sample
+
 def get_args_parser():
     parser = argparse.ArgumentParser('FCMAE pre-training', add_help=False)
     parser.add_argument('--batch_size', default=64, type=int,
@@ -189,7 +188,7 @@ def main(args):
     #     ])
 
     transform_train = transforms.Compose([
-        Resize3D((200,args.input_size, args.input_size))  # 目标大小 (128, 128)
+        Resize3D((200, args.input_size, args.input_size))  # 目标大小 (128, 128)
     ])
 
     #dataset_train = datasets.ImageFolder(os.path.join(args.data_path, 'train'), transform=transform_train)
