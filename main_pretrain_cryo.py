@@ -48,7 +48,7 @@ class Resize3D:
 
         for i in range(depth):
             # 对每个深度切片应用resize
-            sample_resized[i] = interpolate(torch.tensor(sample[i]).unsqueeze(0).unsqueeze(0).float(),
+            sample_resized[i] = interpolate(torch.tensor(sample[i]).unsqueeze(0).unsqueeze(0).float(), # (1, 1, height, width)
                                             size=(target_height, target_width),
                                             mode='bilinear',
                                             align_corners=False).squeeze(0).squeeze(0).numpy()
