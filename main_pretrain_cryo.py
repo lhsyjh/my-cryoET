@@ -36,7 +36,7 @@ from utils import str2bool
 
 class Resize3D:
     def __init__(self, target_size):
-        self.target_size = target_size  # 目标大小，tuple形式，如 (128, 128)
+        self.target_size = target_size  # 目标大小，tuple形式，如 (512, 512)
 
     def __call__(self, sample):
         # 假设sample是一个3D numpy数组，形状是 (200, 256, 256)
@@ -188,7 +188,7 @@ def main(args):
     #     ])
 
     transform_train = transforms.Compose([
-        Resize3D((200, args.input_size, args.input_size))  # 目标大小 (128, 128)
+        Resize3D((200, args.input_size, args.input_size))  # 目标大小 (512, 512)
     ])
 
     #dataset_train = datasets.ImageFolder(os.path.join(args.data_path, 'train'), transform=transform_train)
