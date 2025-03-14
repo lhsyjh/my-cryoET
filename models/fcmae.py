@@ -90,8 +90,8 @@ class FCMAE(nn.Module):
     
     def patchify(self, imgs):
         """
-        imgs: (N, 3, H, W)
-        x: (N, L, patch_size**2 *3)
+        imgs: (N, 200, H, W)
+        x: (N, L, patch_size**2 *200)
         """
         p = self.patch_size
         assert imgs.shape[2] == imgs.shape[3] and imgs.shape[2] % p == 0
