@@ -90,7 +90,7 @@ class FCMAE(nn.Module):
     
     def patchify(self, imgs):
         """
-        imgs: (N, 200, H, W)
+        imgs: (N, 200, H, W)  # 适配C=200
         x: (N, L, patch_size**2 *200)
         """
         p = self.patch_size
@@ -104,16 +104,16 @@ class FCMAE(nn.Module):
 
     def unpatchify(self, x):
         """
-        x: (N, L, patch_size**2 *3)
-        imgs: (N, 3, H, W)
+        x: (N, L, patch_size**2 *200)  # 适配C=200
+        imgs: (N, 200, H, W)
         """
         p = self.patch_size
         h = w = int(x.shape[1]**.5)
         assert h * w == x.shape[1]
         
-        x = x.reshape(shape=(x.shape[0], h, w, p, p, 3))
+        x = x.reshape(shape=(x.shape[0], h, w, p, p, 200))
         x = torch.einsum('nhwpqc->nchpwq', x)
-        imgs = x.reshape(shape=(x.shape[0], 3, h * p, h * p))
+        imgs = x.reshape(shape=(x.shape[0], 200, h * p, h * p))
         return imgs
 
     def gen_random_mask(self, x, mask_ratio):
