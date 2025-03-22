@@ -39,7 +39,7 @@ class Resize3D:
         self.target_size = target_size  # 目标大小，tuple形式，如 (512, 512)
 
     def __call__(self, sample):
-        # 假设sample是一个3D numpy数组，形状是 (200, 256, 256)
+        # 假设sample是一个3D numpy数组，形状是 (200, 630, 630)
         depth, height, width = sample.shape
         target_depth, target_height, target_width = self.target_size
 
