@@ -26,7 +26,7 @@ import timm
 assert timm.__version__ == "0.3.2"  # version check
 import timm.optim.optim_factory as optim_factory
 
-from engine_pretrain import train_one_epoch_cryo
+from engine_pretrain import train_one_epoch_cryo  # 改成cryo版
 import models.fcmae as fcmae
 
 import utils
@@ -266,7 +266,7 @@ def main(args):
             data_loader_train.sampler.set_epoch(epoch)
         if log_writer is not None:
             log_writer.set_step(epoch * num_training_steps_per_epoch * args.update_freq)
-        train_stats = train_one_epoch_cryo(
+        train_stats = train_one_epoch_cryo(  # 改成cryo版
             model, data_loader_train,
             optimizer, device, epoch, loss_scaler,
             log_writer=log_writer,
