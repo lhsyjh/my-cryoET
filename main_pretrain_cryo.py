@@ -1,13 +1,3 @@
-import os
-import zarr
-from PIL import Image
-from torch.nn.functional import interpolate
-import torch
-from torch.utils.data import Dataset, DataLoader
-from torchvision import transforms
-
-
-
 import argparse
 import datetime
 import numpy as np
@@ -20,6 +10,12 @@ import torch
 import torch.backends.cudnn as cudnn
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
+
+import zarr
+from PIL import Image
+from torch.nn.functional import interpolate
+from torch.utils.data import Dataset, DataLoader
+from torchvision import transforms
 
 import timm
 
