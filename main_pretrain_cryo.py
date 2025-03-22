@@ -217,9 +217,10 @@ def main(args):
         pin_memory=args.pin_mem,
         drop_last=True,
     )
+    
     # define the model
     model = fcmae.__dict__[args.model](
-        in_chans=200,
+        in_chans=200,  # 添加默认200
         mask_ratio=args.mask_ratio,
         decoder_depth=args.decoder_depth,
         decoder_embed_dim=args.decoder_embed_dim,
