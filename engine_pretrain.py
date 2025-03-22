@@ -28,7 +28,7 @@ def train_one_epoch_cryo(model: torch.nn.Module,
 
     optimizer.zero_grad()
     for data_iter_step, samples in enumerate(metric_logger.log_every(data_loader, print_freq, header)):
-        # we use a per iteration (instead of per epoch) lr scheduler
+        # we use a per iteration (instead of per epoch) lr scheduler, 取消labels因为大部分数据没有labels
         if data_iter_step % update_freq == 0:
             utils.adjust_learning_rate(optimizer, data_iter_step / len(data_loader) + epoch, args)
 
@@ -36,7 +36,7 @@ def train_one_epoch_cryo(model: torch.nn.Module,
             samples = samples.to(device, non_blocking=True)
         #labels = labels.to(device, non_blocking=True)
 
-        loss, _, _ = model(samples, labels=None, mask_ratio=args.mask_ratio)
+        loss, _, _ = model(samples, labels=None, mask_ratio=args.mask_ratio)  # labels默认None
 
         loss_value = loss.item()
 
