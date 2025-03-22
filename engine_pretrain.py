@@ -13,7 +13,6 @@ from typing import Iterable
 import torch
 import utils
 
-
 def train_one_epoch_cryo(model: torch.nn.Module,
                     data_loader: Iterable, optimizer: torch.optim.Optimizer,
                     device: torch.device, epoch: int, loss_scaler,
