@@ -15,7 +15,6 @@ import zarr
 from PIL import Image
 from torch.nn.functional import interpolate
 from torch.utils.data import Dataset, DataLoader
-from torchvision import transforms
 
 import timm
 
