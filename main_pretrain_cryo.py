@@ -26,7 +26,7 @@ import timm
 assert timm.__version__ == "0.3.2"  # version check
 import timm.optim.optim_factory as optim_factory
 
-from engine_pretrain import train_one_epoch,train_one_epoch_cryo
+from engine_pretrain import train_one_epoch_cryo
 import models.fcmae as fcmae
 
 import utils
