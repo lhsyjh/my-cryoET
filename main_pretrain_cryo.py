@@ -47,7 +47,6 @@ class Resize3D:
                                             size=(target_height, target_width),
                                             mode='bilinear',
                                             align_corners=False).squeeze(0).squeeze(0).numpy()
-
         return sample_resized
 
 class ZarrDataset(Dataset):
@@ -61,7 +60,7 @@ class ZarrDataset(Dataset):
         self.transform = transform
         self.folders = []  # 存放所有文件夹的路径
 
-        # 遍历所有的文件夹
+        # 遍历所有的文件夹，例如TS_0, TS_1, ...
         for subdir in os.listdir(root_dir):
             folder_path = os.path.join(root_dir, subdir)
             # 确保它是一个文件夹
@@ -73,22 +72,13 @@ class ZarrDataset(Dataset):
         return len(self.folders)
 
     def __getitem__(self, idx):
-        # 根据索引读取一个文件夹中的数据
         folder_path = self.folders[idx]
-
-        # 构建zarr文件的路径
         zarr_file_path = os.path.join(folder_path, 'Reconstructions', 'VoxelSpacing10.000', 'Tomograms', '100',
-                                      f'{os.path.basename(folder_path)}.zarr')
-        # 打开Zarr文件
-        zarr_file = zarr.open(zarr_file_path, mode='r')
-
-        # 假设我们要访问数据集中的第一个数据集（例如"0"）
-        dataset = zarr_file['0'][:]
-
-        #如果需要，可以应用转换（例如归一化、数据增强等）
-        if self.transform:
+                                      f'{os.path.basename(folder_path)}.zarr'）     
+        zarr_file = zarr.open(zarr_file_path, mode='r')   # 构建zarr文件的路径并打开Zarr文件
+        dataset = zarr_file['0'][:]    # 假设要访问数据集中的第一个数据集（例如"0"）
+        if self.transform:    #如果需要，可以应用转换（例如归一化、数据增强等）
             sample = self.transform(dataset)
-
         return sample
 
 def get_args_parser():
