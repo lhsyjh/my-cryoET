@@ -74,7 +74,7 @@ class ZarrDataset(Dataset):
     def __getitem__(self, idx):
         folder_path = self.folders[idx]
         zarr_file_path = os.path.join(folder_path, 'Reconstructions', 'VoxelSpacing10.000', 'Tomograms', '100',
-                                      f'{os.path.basename(folder_path)}.zarr'）     
+                                      f'{os.path.basename(folder_path)}.zarr')     
         zarr_file = zarr.open(zarr_file_path, mode='r')   # 构建zarr文件的路径并打开Zarr文件
         dataset = zarr_file['0'][:]    # 假设要访问数据集中的第一个数据集（例如"0"）
         if self.transform:    #如果需要，可以应用转换（例如归一化、数据增强等）
