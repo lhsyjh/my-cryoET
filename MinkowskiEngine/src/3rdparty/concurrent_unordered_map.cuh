@@ -500,7 +500,7 @@ class concurrent_unordered_map {
 
   size_t size() const
   {
-    return thrust::count_if(thrust::device, m_hashtbl_values, m_hashtbl_values + m_capacity,
+    return thrust::count_if(thrust::cuda::par, m_hashtbl_values, m_hashtbl_values + m_capacity,
                             _is_used<Key, Element, Equality>(get_unused_key(), get_key_equal()));
   }
 
