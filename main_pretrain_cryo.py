@@ -18,7 +18,7 @@ from torch.utils.data import Dataset, DataLoader
 
 import timm
 
-assert timm.__version__ == "0.3.2"  # version check
+# assert timm.__version__ == "0.3.2"  # version check
 import timm.optim.optim_factory as optim_factory
 
 from engine_pretrain import train_one_epoch_cryo  # 改成cryo版
