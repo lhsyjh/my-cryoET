@@ -182,10 +182,13 @@ def main(args):
 
     num_tasks = utils.get_world_size()
     global_rank = utils.get_rank()
+    if num_tasks > 1: # 添加DistributedSampler的应用条件
+        sampler_train = torch.utils.data.DistributedSampler(
+            dataset_train, num_replicas=num_tasks, rank=global_rank, shuffle=True, seed=args.seed
+        )
+    else:  # 否则使用SequentialSampler
+        sampler_train = torch.utils.data.SequentialSampler(dataset_train)
 
-    sampler_train = torch.utils.data.DistributedSampler(
-        dataset_train, num_replicas=num_tasks, rank=global_rank, shuffle=True, seed=args.seed,
-    )
     print("Sampler_train = %s" % str(sampler_train))
 
     if global_rank == 0 and args.log_dir is not None:
@@ -198,10 +201,13 @@ def main(args):
     data_loader_train = torch.utils.data.DataLoader(
         dataset_train, sampler=sampler_train,
         batch_size=args.batch_size,
-        num_workers=args.num_workers,
-        pin_memory=args.pin_mem,
-        drop_last=True,
+        # num_workers=args.num_workers,
+        # pin_memory=args.pin_mem,
+        num_workers=0, # 节省空间
+        pin_memory=False, 
+        drop_last=False,  # 一开始是False，但是总共len就不多
     )
+    print(f"DataLoader length: {len(data_loader_train)}")  # 检查dataloader长度
     
     # define the model
     model = fcmae.__dict__[args.model](
@@ -252,7 +258,7 @@ def main(args):
     print(f"Start training for {args.epochs} epochs")
     start_time = time.time()
     for epoch in range(args.start_epoch, args.epochs):
-        if args.distributed:
+        if args.distributed and isinstance(data_loader_train.sampler, torch.utils.data.DistributedSampler):
             data_loader_train.sampler.set_epoch(epoch)
         if log_writer is not None:
             log_writer.set_step(epoch * num_training_steps_per_epoch * args.update_freq)
