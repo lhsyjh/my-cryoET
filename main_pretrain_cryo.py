@@ -232,7 +232,12 @@ def main(args):
     print("effective batch size: %d" % eff_batch_size)
 
     if args.distributed:
-        model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.gpu], find_unused_parameters=True)
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        model.to(device)
+        if torch.cuda.is_available():
+            model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.gpu], find_unused_parameters=True)
+        else: 
+            model = torch.nn.parallel.DistributedDataParallel(model)
         model_without_ddp = model.module
 
     param_groups = optim_factory.add_weight_decay(model_without_ddp, args.weight_decay)
