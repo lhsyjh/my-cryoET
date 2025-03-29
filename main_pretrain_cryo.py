@@ -63,8 +63,8 @@ class ZarrDataset(Dataset):
         # 遍历所有的文件夹，例如TS_0, TS_1, ...
         for subdir in os.listdir(root_dir):
             folder_path = os.path.join(root_dir, subdir)
-            # 确保它是一个文件夹
-            if os.path.isdir(folder_path):
+            # 确保它是一个文件夹，但不能是Images（里面没有需要的zarr文件）
+            if os.path.isdir(folder_path) and (subdir != "Images"):
                 self.folders.append(folder_path)
 
     def __len__(self):
