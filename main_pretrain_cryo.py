@@ -51,11 +51,6 @@ class Resize3D:
 
 class ZarrDataset(Dataset):
     def __init__(self, root_dir, transform=None):
-        """
-        初始化数据集。
-        :param root_dir: 存放文件夹（例如 './10441'）
-        :param transform: 需要应用于数据的预处理转换操作（可选）
-        """
         self.root_dir = root_dir
         self.transform = transform
         self.folders = []  # 存放所有文件夹的路径
@@ -77,7 +72,7 @@ class ZarrDataset(Dataset):
                                       f'{os.path.basename(folder_path)}.zarr')     
         zarr_file = zarr.open(zarr_file_path, mode='r')   # 构建zarr文件的路径并打开Zarr文件
         dataset = zarr_file['0'][:]    # 假设要访问数据集中的第一个数据集（例如"0"）
-        if self.transform:    #如果需要，可以应用转换（例如归一化、数据增强等）
+        if self.transform: 
             sample = self.transform(dataset)
         return sample
 
