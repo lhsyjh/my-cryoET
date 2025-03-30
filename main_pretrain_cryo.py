@@ -169,7 +169,7 @@ def main(args):
     # dataset_train = datasets.ImageFolder(os.path.join(args.data_path, 'train'), transform=transform_train)
     
     transform_train = transforms.Compose([
-        Resize3D((200, args.input_size, args.input_size))  # 目标大小 (512, 512)
+        Resize3D((200, args.input_size, args.input_size))  # 默认目标大小 (224, 224)
     ])
 
     dataset_train = ZarrDataset(root_dir=args.data_path, transform=transform_train)
