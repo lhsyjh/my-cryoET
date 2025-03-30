@@ -166,12 +166,12 @@ def main(args):
     #     transforms.ToTensor(),
     #     #transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     #     ])
-
+    # dataset_train = datasets.ImageFolder(os.path.join(args.data_path, 'train'), transform=transform_train)
+    
     transform_train = transforms.Compose([
         Resize3D((200, args.input_size, args.input_size))  # 目标大小 (512, 512)
     ])
 
-    #dataset_train = datasets.ImageFolder(os.path.join(args.data_path, 'train'), transform=transform_train)
     dataset_train = ZarrDataset(root_dir=args.data_path, transform=transform_train)
     print(dataset_train)
 
