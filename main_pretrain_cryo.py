@@ -53,17 +53,17 @@ class ZarrDataset(Dataset):
     def __init__(self, root_dir, transform=None):
         self.root_dir = root_dir
         self.transform = transform
-        self.folders = []  # 存放所有文件夹的路径
+        self.folders = []  # 存放所有folders的路径
 
-        # 遍历所有的文件夹，例如TS_0, TS_1, ...
+        # 遍历所有的folders，例如TS_0, TS_1, ...
         for subdir in os.listdir(root_dir):
             folder_path = os.path.join(root_dir, subdir)
-            # 确保它是一个文件夹，但不能是Images（里面没有需要的zarr文件）
+            # 确保它是一个folders，但不能是Images（里面没有需要的zarr文件）
             if os.path.isdir(folder_path) and (subdir != "Images"):
                 self.folders.append(folder_path)
 
     def __len__(self):
-        # 返回数据集的大小（即所有文件夹数量）
+        # 返回数据集的大小（即folders的数量）
         return len(self.folders)
 
     def __getitem__(self, idx):
