@@ -31,7 +31,7 @@ from utils import str2bool
 
 class Resize3D:
     def __init__(self, target_size):
-        self.target_size = target_size  # 目标大小，tuple形式，如 (512, 512)
+        self.target_size = target_size  # 目标大小，tuple形式，如 (224, 224)
 
     def __call__(self, sample):
         # 假设sample是一个3D numpy数组，形状是 (200, 630, 630)
@@ -89,7 +89,7 @@ def get_args_parser():
     # Model parameters
     parser.add_argument('--model', default='convnextv2_base', type=str, metavar='MODEL',
                         help='Name of model to train')
-    parser.add_argument('--input_size', default=512, type=int,
+    parser.add_argument('--input_size', default=224, type=int,
                         help='image input size')
     parser.add_argument('--mask_ratio', default=0.6, type=float,
                         help='Masking ratio (percentage of removed patches).')
